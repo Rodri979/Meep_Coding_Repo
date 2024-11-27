@@ -9,8 +9,8 @@ function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_nu
 %   then the xz plane)
 % 
 % slice_num -> The number that the chosen slice dimension will be set to,
-% for example if slice_num = 75 and slice = x then the plot will be output
-% at x = 75
+%   for example if slice_num = 75 and slice = x then the plot will be output
+%   at x = 75
 %
 % title -> Title of plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
