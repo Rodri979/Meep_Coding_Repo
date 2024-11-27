@@ -7,9 +7,7 @@ function eps_plotter(eps_data, slice, slice_num)
 % slice -> 'x', 'y', or 'z' slice of data you want to take. This combined with
 % slice num is like chosing a plane that goes through a specified point.
 % For example if slice = 'x' and slice_num = 37 then you are selecting the
-% yz plane which cuts through x = 37. FYI the x,y,z values here do not
-% exactly correlate with xyz values in meep so play around with slice until
-% you get the visualization you are looking for.
+% yz plane which cuts through x = 37.
 %
 % slice_num -> The value to which the "slice" variable will be assigned.
 % e.g. if slice = 'y' and slice_num = 53 then the plane that satisfies 
