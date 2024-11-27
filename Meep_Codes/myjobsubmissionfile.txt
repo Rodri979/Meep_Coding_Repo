@@ -1,0 +1,23 @@
+#!/bin/sh -l
+# FILENAME:  myjobsubmissionfile
+
+
+
+#SBATCH -A standby
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --time=00:30:00
+#SBATCH --job-name myjobname
+
+source ~zhu797/.profile
+
+# Print the hostname of the compute node on which this job is running.
+/bin/hostname
+
+# Change to the directory from which you originally submitted this job.
+cd $SLURM_SUBMIT_DIR
+
+mpirun -np 1 meep Ag_disp_trial.ctl | tee good_disp_trial.out
+
+
+echo "Done"
