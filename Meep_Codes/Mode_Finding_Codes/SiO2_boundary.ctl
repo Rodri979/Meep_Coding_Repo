@@ -39,8 +39,9 @@
 
 ))
 
-(set! pml-layers (list (make pml (direction Y) (thickness dpml))))
-(set! pml-layers (list (make pml (direction X) (thickness dpml))))
+(set! pml-layers (list (make pml (direction Y) (thickness dpml))
+                       (make pml (direction X) (thickness dpml))
+))
 
 
 (if output_eps_only
