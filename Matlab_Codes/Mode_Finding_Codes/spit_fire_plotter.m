@@ -21,6 +21,11 @@ function spit_fire_plotter(directory, mode_data, eps_file, slice, resolution, sl
 %   for example if slice_num = 75 and slice = x then the plot will be output
 %   at x = 75. Slice_num to be put into Plot_3d_w_black_lines.m
 %
+%   resolution -> The value of the resolution which the simulation was run in
+%   meep. Used to calculate the size (in um) of the dimensions. If the refrence
+%   dimension is not 1 um, you can change the hardcoded um dimension in the 
+%   bottom switch case in Plot_3d_w_black_lines for now.
+%
 %   eps_file -> The epsilon structure h5 file with which the field will be
 %   overlayed
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
