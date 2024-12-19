@@ -1,20 +1,24 @@
 function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_num, resolution, title)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% eps_h5 -> 3d h5 datafile for the dielectric strucutre
+%   This plots a 2d slice of a 3d electromagnetic wave profile output as an
+%   h5 file from meep. It overlays a plot of the field (given in ez_h5) over 
+%   a plot of the geometry (given in eps_h5)
 %
-% ez_h5 -> 3d h5 datafile for efield 
+%   eps_h5 -> 3d h5 datafile for the dielectric strucutre
 %
-% slice -> 'x', 'y', or 'z'. Determines the plane that the slice will be a
+%   ez_h5 -> 3d h5 datafile for efield 
+%
+%   slice -> 'x', 'y', or 'z'. Determines the plane that the slice will be a
 %   part of (if 'x' is chosen then the yz plane will be used, 'y' 
 %   then the xz plane)
 % 
-% slice_num -> The number that the chosen slice dimension will be set to,
+%   slice_num -> The number that the chosen slice dimension will be set to,
 %   for example if slice_num = 75 and slice = x then the plot will be output
 %   at x = 75
 %
-% resolution -> The resolution that the simulation was run in meep
+%   resolution -> The resolution that the simulation was run in meep
 %
-% title -> Title of plot
+%   title -> Title of plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 eps_data = h5read(eps_h5, eps_code);
