@@ -67,7 +67,7 @@ hold all;
    
 %plot second data 
 ax2 = axes; 
-im1 = imagesc(ax2,flipud(abs(ez_slice))); 
+im1 = imagesc(ax2,flipud(ez_slice)); 
 im1.AlphaData = 0.75; % change this value to change the foreground image transparency 
 axis square; 
     
