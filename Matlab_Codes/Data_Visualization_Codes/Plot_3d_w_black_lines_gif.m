@@ -1,20 +1,38 @@
 function Plot_3d_w_black_lines_gif(eps_h5, eps_code, ez_h5, ez_code, slice, slice_num, max_field, min_field, resolution, title)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% eps_h5 -> 3d h5 datafile for the dielectric strucutre
+%   This function, much like Plot_3d_w_black_lines.m, overlays a plot of a
+%   field profile over a plot of geometry. This function, however, is only
+%   used in the gif_plotter function and is not meant to be used on its own.
+%   The difference is that this plot sets a preset scale for the field colors
+%   so that a gif mantains a constant field scaling throughout and does not
+%   change between pngs. The max amplitude for a field in the scaling is 
+%   input in max_field and the min_field for a scaling (could just be set to 0
+%   for a energy density graph) is the minimum field value for scaling. In 
+%   gif_plotter.m it cycles through each field profile, finds the absolute min
+%   and max field values and then these are input into this function to set a
+%   common scaling.
 %
-% ez_h5 -> 3d h5 datafile for efield 
+%   eps_h5 -> 3d h5 datafile for the dielectric strucutre
 %
-% slice -> 'x', 'y', or 'z'. Determines the plane that the slice will be a
+%   ez_h5 -> 3d h5 datafile for efield 
+%
+%   slice -> 'x', 'y', or 'z'. Determines the plane that the slice will be a
 %   part of (if 'x' is chosen then the yz plane will be used, 'y' 
 %   then the xz plane)
 % 
-% slice_num -> The number that the chosen slice dimension will be set to,
-% for example if slice_num = 75 and slice = x then the plot will be output
-% at x = 75
+%   slice_num -> The number that the chosen slice dimension will be set to,
+%   for example if slice_num = 75 and slice = x then the plot will be output
+%   at x = 75
 %
-% resolution -> The resolution that the simulation was run in meep
+%   max_field -> Maximum field amplitude for scaling purposes (in gif_plotter.m
+%   this is found through a loop and input to this function)
 %
-% title -> Title of plot
+%   min_field -> Minimum field amplutude (0 for energy density plots). In 
+%   gif_plotter.m this is found through a loop and input to this function.
+%
+%   resolution -> The resolution that the simulation was run in meep
+%
+%   title -> Title of plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 eps_data = h5read(eps_h5, eps_code);
