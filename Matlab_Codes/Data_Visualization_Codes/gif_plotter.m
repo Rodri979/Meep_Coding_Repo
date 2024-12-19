@@ -67,6 +67,8 @@ end
 
 for graph_index = 1:1:length(pic_names)
     Plot_3d_w_black_lines_gif(eps_file, "/eps", "/scratch/bell/rodri979/meep_files/matlab/" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num, max_field, min_field, resolution, title)
+    fprintf(num2str(graph_index) + ": " + pic_names(graph_index))
+    fprintf("\n")
 end
 
 end
