@@ -1,4 +1,4 @@
-function spit_fire_plotter(directory, mode_data, eps_file, slice, slice_num)
+function spit_fire_plotter(directory, mode_data, eps_file, slice, resolution, slice_num)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   spit_fire_plotter plots all modes in a directory
 %
@@ -40,7 +40,7 @@ for dir_num = linspace(3,length(dir_struct),(length(dir_struct)-2))
 end
    disp(pic_names)
 for graph_index = linspace(1, length(pic_names(:,1)), length(pic_names(:,1)))
-    Plot_3d_w_black_lines(eps_file, "/eps", "/scratch/bell/rodri979/meep_files/matlab/" + directory + "/kz_" + pic_names(graph_index, 1) + "/" + pic_names(graph_index, 3), "/denergy", slice, slice_num, "|E| at z=25 for k=" + pic_names(graph_index, 1) + " and w=" + pic_names(graph_index, 2))
+    Plot_3d_w_black_lines(eps_file, "/eps", "/scratch/bell/rodri979/meep_files/matlab/" + directory + "/kz_" + pic_names(graph_index, 1) + "/" + pic_names(graph_index, 3), "/denergy", slice, slice_num, resolution, "|E| at z=25 for k=" + pic_names(graph_index, 1) + " and w=" + pic_names(graph_index, 2))
 end
 
 end
