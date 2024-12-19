@@ -12,9 +12,10 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %   **** NOTE
 %   Plot_3d_w_black_lines_gif.m IS NOT the same as Plot_3d_w_black_lines.m
 %
-%   *** YOU MUST EDIT THE PATH IN LINES 55 and 58 which read "/scratch/bell/rodri979/
-%   meep_files/matlab/" TO MATCH THE PATH DIRECTORY WHERE THE FOLDER 
-%   CONTIANING ONLY MODE h5 FILES IS STORED ON YOUR DEVICE
+%   *** YOU MUST EDIT THE PATH IN LINES 56, 59, and 69 which read 
+%   "/scratch/bell/rodri979/meep_files/matlab/" TO MATCH THE PATH 
+%   DIRECTORY WHERE THE FOLDER CONTIANING ONLY MODE h5 FILES IS 
+%   STORED ON YOUR DEVICE
 %   
 %   directory -> input of form "directory" (MUST BE IN DOUBLE QUOTES). This
 %   is the name of the folder which has in it ONLY the h5 denergy files 
