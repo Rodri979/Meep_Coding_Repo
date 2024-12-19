@@ -13,6 +13,11 @@ function eps_plotter(eps_data, slice, slice_num, resolution)
 % e.g. if slice = 'y' and slice_num = 53 then the plane that satisfies 
 % y = 53 will be shown
 %
+% resolution -> The value of the resolution which the simulation was run in
+% meep. Used to calculate the size (in um) of the dimensions. If the refrence
+% dimension is not 1 um, you can change the hardcoded um dimension in the 
+% bottom switch case for now.
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 eps_data = h5read(eps_data, "/eps");
 
