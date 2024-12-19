@@ -1,5 +1,10 @@
 function [maximum, minimum] = pull_max_min(ez_h5, ez_code, slice, slice_num)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   This function pulls the max field profile value and min field profile
+%   value in an h5 profile and output them. This function is used in
+%   gif_plotter.m to find the overall max and min field profile values in 
+%   a group of h5 files (through a loop).
+%
 %   ez_h5 -> 3d h5 datafile for efield
 %
 %   ez_code -> either "/denergy" for a dpwr h5, "/ez" for and ez file,
