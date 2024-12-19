@@ -51,7 +51,7 @@ for dir_num = linspace(3,length(dir_struct),(length(dir_struct)-2))
     end
 end
 
-disp(pic_names)
+%disp(pic_names)
 
 [max_field, min_field] = pull_max_min("/scratch/bell/rodri979/meep_files/matlab/" + directory + "/" + pic_names(1), "/denergy", slice, slice_num);
    
