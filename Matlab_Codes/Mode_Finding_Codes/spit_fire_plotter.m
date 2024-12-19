@@ -2,7 +2,7 @@ function spit_fire_plotter(directory, mode_data, eps_file, slice, resolution, sl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   spit_fire_plotter plots all modes in a directory
 %
-%   *** YOU MUST EDIT THE PATH IN LINE 33 which reads "/scratch/bell/rodri979/
+%   *** YOU MUST EDIT THE PATH IN LINE 48 which reads "/scratch/bell/rodri979/
 %   meep_files/matlab/" TO MATCH THE DIRECTORY WHERE h5 DATA GENERATED FROM 
 %   pic_run.sh IS ON YOUR SPECIFIC COMPUTER***
 %   
