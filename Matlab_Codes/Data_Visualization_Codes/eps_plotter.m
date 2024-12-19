@@ -1,4 +1,4 @@
-function eps_plotter(eps_data, slice, slice_num)
+function eps_plotter(eps_data, slice, slice_num, resolution)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % eps_data -> eps h5 datafile. Input the name of your eps h5 file in quotes
@@ -35,15 +35,28 @@ colorbar;
 colormap(flipud(gray));
 title("Eps 2d Slice at " + slice + " = " + string(slice_num));
 axis square;
+min_2 = -1 * round((size(eps_slice,2) - 1)/(2 * resolution),1);
+max_2 = -1 * min_2;
+
+min_1 = -1 * round((size(eps_slice,1) - 1)/(2 * resolution), 1);
+max_1 = -1 * min_1;
+
+xticks(linspace(1,size(eps_slice,2),5))
+xticklabels(linspace(min_2,max_2,5))
+
+yticks(linspace(1,size(eps_slice,1),5))
+yticklabels(linspace(max_1, min_1, 5))
+
 switch slice
     case 'z'
-        xlabel('x');
-        ylabel('y');
+        xlabel('X (\mum)');
+        ylabel('Y (\mum)');
     case 'y'
-        xlabel('x');
-        ylabel('z');
+        xlabel('X (\mum)');
+        ylabel('Z (\mum)');
     case 'x'
-        xlabel('y');
-        ylabel('z');
+        xlabel('Y (\mum)');
+        ylabel('Z (\mum)');
 end
+
 end
