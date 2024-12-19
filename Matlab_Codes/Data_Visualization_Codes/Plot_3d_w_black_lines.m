@@ -1,4 +1,4 @@
-function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_num, title)
+function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_num, resolution, title)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % eps_h5 -> 3d h5 datafile for the dielectric strucutre
 %
@@ -11,6 +11,8 @@ function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_nu
 % slice_num -> The number that the chosen slice dimension will be set to,
 %   for example if slice_num = 75 and slice = x then the plot will be output
 %   at x = 75
+%
+% resolution -> The resolution that the simulation was run in meep
 %
 % title -> Title of plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +50,8 @@ hold all;
 %plot second data 
 ax2 = axes; 
 im1 = imagesc(ax2,flipud(abs(ez_slice))); 
-im1.AlphaData = 0.75; % change this value to change the foreground image transparency 
+im1.AlphaData = 0.75; % change this value to change the foreground image transparency
+%caxis([0 0.0000005])
 axis square; 
     
 %link axes 
@@ -70,8 +73,15 @@ sgtitle(title);
     
 ylabel(cb2, '|E|', 'Position', [.5 .0], 'Rotation', 0, 'FontSize', 16);
     
-set(ax1, 'XTick', [1 round(size(eps_slice,2)/2) size(eps_slice,2)], 'XTickLabel', {'-5' '0' '5'}, 'FontSize', 12);
-set(ax1, 'YTick', 1:round(size(eps_slice,1)/4):size(eps_slice,2), 'YTickLabel', linspace(-2, 2, 5), 'FontSize', 12);
+min_2 = -1 * round((size(eps_slice,2) - 1)/(2 * resolution),1);
+max_2 = -1 * min_2;
+
+min_1 = -1 * round((size(eps_slice,1) - 1)/(2 * resolution), 1);
+max_1 = -1 * min_1;
+
+set(ax1, 'XTick', linspace(1,size(eps_slice,2),5), 'XTickLabel', linspace(min_2,max_2,5), 'FontSize', 12);
+set(ax1, 'YTick', linspace(1,size(eps_slice,1),5), 'YTickLabel', linspace(max_1, min_1, 5), 'FontSize', 12);
+
 
 switch slice
     case 'z'
@@ -89,6 +99,5 @@ drawnow
 hold off;
 
 end
-
 
 
