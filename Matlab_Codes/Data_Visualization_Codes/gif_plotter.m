@@ -8,7 +8,7 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %   png files can then be converted into a gif using the convert *.png
 %   name.gif function in bash.
 %
-%   THIS IS PART OF A PACKAGE OF CODE. IT NEEDS pull_max_min.m and
+%   THIS IS PART OF A PACKAGE OF CODE. IT NEEDS pull_max_min.m AND
 %   Plot_3d_w_black_lines_gif.m to run 
 %
 %   **** NOTE
