@@ -14,7 +14,7 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %   **** NOTE
 %   Plot_3d_w_black_lines_gif.m IS NOT the same as Plot_3d_w_black_lines.m
 %
-%   *** YOU MUST EDIT THE PATH IN LINES 56, 59, and 69 which read 
+%   *** YOU MUST EDIT THE PATH IN LINES 58, 61, and 71 which read 
 %   "/scratch/bell/rodri979/meep_files/matlab/" TO MATCH THE PATH 
 %   DIRECTORY WHERE THE FOLDER CONTIANING ONLY MODE h5 FILES IS 
 %   STORED ON YOUR DEVICE
