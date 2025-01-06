@@ -2,8 +2,10 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   gif_plotter plots all modes in a directory. IT MUST ONLY CONTATION THE 
 %   H5 denergy FILES OUTPUT FROM A MEEP SIMULATION. It is meant to plot all
-%   files which can be manually saved as pngs and named. The named png
-%   files can then be converted into a gif using the convert name*.png >
+%   files which are automatically saved (in the same directory as the h5 
+%   files) as pngs and named (thus if a mistake was made and it needs to
+%   run again delete all pngs in the directory and start over). The named
+%   png files can then be converted into a gif using the convert *.png
 %   name.gif function in bash.
 %
 %   THIS IS PART OF A PACKAGE OF CODE. IT NEEDS pull_max_min.m and
