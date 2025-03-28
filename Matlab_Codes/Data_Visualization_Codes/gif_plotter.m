@@ -6,7 +6,8 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %   files) as pngs and named (thus if a mistake was made and it needs to
 %   run again delete all pngs in the directory and start over). The named
 %   png files can then be converted into a gif using the convert *.png
-%   name.gif function in bash.
+%   name.gif function in bash (use magick instead of convert if convert
+%   is outdated).
 %
 %   THIS IS PART OF A PACKAGE OF CODE. IT NEEDS pull_max_min.m AND
 %   Plot_3d_w_black_lines_gif.m to run 
