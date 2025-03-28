@@ -1,10 +1,6 @@
 function spit_fire_plotter(directory, mode_data, eps_file, slice, resolution, slice_num)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   spit_fire_plotter plots all modes in a directory
-%
-%   *** YOU MUST EDIT THE PATH IN LINE 48 which reads "/scratch/bell/rodri979/
-%   meep_files/matlab/" TO MATCH THE DIRECTORY WHERE h5 DATA GENERATED FROM 
-%   pic_run.sh IS ON YOUR SPECIFIC COMPUTER***
 %   
 %   directory -> input of form "directory" (MUST BE IN DOUBLE QUOTES) which
 %   has more directories inside named kz_# with # given by the k values in 
@@ -45,7 +41,7 @@ for dir_num = linspace(3,length(dir_struct),(length(dir_struct)-2))
 end
    disp(pic_names)
 for graph_index = linspace(1, length(pic_names(:,1)), length(pic_names(:,1)))
-    Plot_3d_w_black_lines(eps_file, "/eps", "/scratch/bell/rodri979/meep_files/matlab/" + directory + "/kz_" + pic_names(graph_index, 1) + "/" + pic_names(graph_index, 3), "/denergy", slice, slice_num, resolution, "|E| at z=25 for k=" + pic_names(graph_index, 1) + " and w=" + pic_names(graph_index, 2))
+    Plot_3d_w_black_lines(eps_file, "/eps", "./" + directory + "/kz_" + pic_names(graph_index, 1) + "/" + pic_names(graph_index, 3), "/denergy", slice, slice_num, resolution, "|E| at z=25 for k=" + pic_names(graph_index, 1) + " and w=" + pic_names(graph_index, 2))
 end
 
 end
