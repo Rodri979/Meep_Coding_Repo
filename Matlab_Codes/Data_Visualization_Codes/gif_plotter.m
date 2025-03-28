@@ -75,5 +75,7 @@ for graph_index = 1:1:length(pic_names)
     saveas(figure(graph_index),png_name, 'png')
 end
 
+clear all
+
 end
 
