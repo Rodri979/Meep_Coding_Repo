@@ -23,7 +23,7 @@
 
 echo "NUM_LINES received: $NUM_LINES"
 
-source ~zhu797/.profile
+# source ~zhu797/.profile
 
 # Print the hostname of the compute node on which this job is running.
 /bin/hostname
@@ -42,23 +42,27 @@ freq=${params[1]}
 # Create a temporary unique directory for this run
 run_dir="run_${SLURM_ARRAY_TASK_ID}_kz_${k_z}_freq_${freq}"
 mkdir -p $run_dir
-cd $run_dir
 
-cp /scratch/bell/rodri979/run_file_folder/straight_waveguide_recreate.ctl . # EDIT
+cp straight_waveguide_recreate.ctl $run_dir # EDIT
+
+cd $run_dir
 
 # Run the meep command with the extracted parameters
 mpirun -np 2 meep use_dir=false output_field=true freq=$freq df=0.01 k_z=$k_z straight_waveguide_recreate.ctl #EDIT
 
 # Move output files to the appropriate k_z directory with unique filenames
-cd /scratch/bell/rodri979/meep_files/matlab/odd_2_src_pics/ #EDIT
+
+output_path = "/scratch/bell/rodri979/meep_files/matlab/odd_2_src_pics/" #EDIT TO WHERE YOU WANT MANY FOLDERS NAMED kz_0.5 kz_0.55 etc TO APPEAR
+
+cd $output_path
 output_dir="kz_${k_z}"
 mkdir -p $output_dir
 
-cd /scratch/bell/rodri979/run_file_folder/ #EDIT
+cd $SLURM_SUBMIT_DIR # EDIT if you are not using bell cluster
 cd $run_dir
 
 for file in straight_waveguide_recreate-denergy*.h5; do #EDIT
-  mv "$file" "/scratch/bell/rodri979/meep_files/matlab/odd_2_src_pics/${output_dir}/${k_z}_freq_${freq}_pwr${file#straight_waveguide_recreate-denergy}"; #EDIT
+  mv "$file" "${output_path}/${output_dir}/${k_z}_freq_${freq}_pwr${file#straight_waveguide_recreate-denergy}"; #EDIT
 done
 
 # Clean up the temporary directory
