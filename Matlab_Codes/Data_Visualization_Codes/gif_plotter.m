@@ -13,11 +13,6 @@ function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
 %
 %   **** NOTE
 %   Plot_3d_w_black_lines_gif.m IS NOT the same as Plot_3d_w_black_lines.m
-%
-%   *** YOU MUST EDIT THE PATH IN LINES 58, 61, and 71 which read 
-%   "/scratch/bell/rodri979/meep_files/matlab/" TO MATCH THE PATH 
-%   DIRECTORY WHERE THE FOLDER CONTIANING ONLY MODE h5 FILES IS 
-%   STORED ON YOUR DEVICE
 %   
 %   directory -> input of form "directory" (MUST BE IN DOUBLE QUOTES). This
 %   is the name of the folder which has in it ONLY the h5 denergy files 
@@ -55,10 +50,10 @@ end
 
 %disp(pic_names)
 
-[max_field, min_field] = pull_max_min("/scratch/bell/rodri979/meep_files/matlab/" + directory + "/" + pic_names(1), "/denergy", slice, slice_num);
+[max_field, min_field] = pull_max_min("./" + directory + "/" + pic_names(1), "/denergy", slice, slice_num);
    
 for graph_index = 2:1:length(pic_names)
-    [temp_max, temp_min] = pull_max_min("/scratch/bell/rodri979/meep_files/matlab/" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num);
+    [temp_max, temp_min] = pull_max_min("./" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num);
     if temp_max > max_field
         max_field = temp_max;
     end
@@ -68,7 +63,7 @@ for graph_index = 2:1:length(pic_names)
 end
 
 for graph_index = 1:1:length(pic_names)
-    Plot_3d_w_black_lines_gif(eps_file, "/eps", "/scratch/bell/rodri979/meep_files/matlab/" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num, max_field, min_field, resolution, title)
+    Plot_3d_w_black_lines_gif(eps_file, "/eps", "./matlab/" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num, max_field, min_field, resolution, title)
     fprintf(num2str(graph_index) + ": " + pic_names(graph_index))
     fprintf("\n")
     png_name = directory + "/" + slice + "_" + num2str(slice_num) + "_" + strrep(pic_names(graph_index),"h5","png");
