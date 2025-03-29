@@ -26,7 +26,7 @@ The new structure of this repo makes it harder to determine the use of all funct
 ## Dispersion Codes
 - Dispersion_Models.m -> Contains the parameters for several example dispersion models that can be inplemented in meep, and displays their dispersion plots to be compared to experiment. This can be added to as more dispersion models are obtained.
 - View_Dispersion.m -> Takes the values that meep will use to define a lorentzian dispersion model and will output a plot of a given range that can be used to compare to experiment. If this plot matches experiment then these values are good to use for a meep lorentzian dispersion model.
-- fitNlorentzian -> This uses stocasitc gradient descent to approximate any given expiremental data to a linear combination of lorentzians. It inputs these values to View_Dispersion.m for comparison and then outputs the parameter values to be used in meep simulation.
+- fitNlorentzian.m -> This uses stocasitc gradient descent to approximate any given expiremental data to a linear combination of lorentzians. It inputs these values to View_Dispersion.m for comparison and then outputs the parameter values to be used in meep simulation.
 ## Mode Finding Codes
 - load_haminv_dat.m -> Loads .dat file that is generated from running grep on the output of a program runnning harminv for a range of k values. Need the first k value along with the step size used in stepping k values to generate the data. To find the k_step use the formula (k_max-k_min)/(k_interp + 1) = k_step.
 - mode_finder.m -> Filters modes output from harminv (data in the form of the output from load_harminv_dat.m) for Q and amplitude as well as frequency range. Returns data with Q values and amplitudes above minimum thresholds.
