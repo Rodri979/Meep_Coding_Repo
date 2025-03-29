@@ -4,9 +4,18 @@ function Plot_3d_w_black_lines(eps_h5, eps_code, ez_h5, ez_code, slice, slice_nu
 %   h5 file from meep. It overlays a plot of the field (given in ez_h5) over 
 %   a plot of the geometry (given in eps_h5)
 %
-%   eps_h5 -> 3d h5 datafile for the dielectric strucutre
+% eps_h5 -> 3d h5 datafile for the dielectric strucutre
 %
-%   ez_h5 -> 3d h5 datafile for efield 
+% eps_code -> "/eps" just enter this for now, this is the code for eps
+% always, this may no longer need to be entered as a parameter later as it
+% is always the same
+%
+% ez_h5 -> 3d h5 datafile for efield 
+%
+% ez_code -> For an energy density file the ez_code is "/denergy", it may
+% change if viewing some other field profile, the code for viewing ez may
+% be "/ez" although this is not certain. They will always be of the form
+% "/name"
 %
 %   slice -> 'x', 'y', or 'z'. Determines the plane that the slice will be a
 %   part of (if 'x' is chosen then the yz plane will be used, 'y' 
