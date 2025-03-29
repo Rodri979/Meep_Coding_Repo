@@ -12,9 +12,9 @@ The new structure of this repo makes it harder to determine the use of all funct
 - pic_run.sh -> Runs many mode outputing programs (in either scheme or python which output the energy desity of modes) in parallel and outputs corresponding h5 files at a desired directrory (typically inside the matlab directory) in structured folders named kz_#. The modes are previously found by Harminv and list output by txt_gen.m (params.txt) is input to pic_run.sh to tell it what modes to run. The matlab program spit_fire_plotter.m plots a common 2D slice of all the modes in these folders and they can be sifted manually to find modes of interest.
 - submit_job.sh -> Run this to run pic_run.sh, outputs the length of params.txt if it is needed.
 ## Gif Plotting Codes
-- straight_wagveguide_recreate_rough -> Can create a gif starting when the source is turned off and continuming for num_periods with num_pictures output per num_periods
+- straight_waveguide_recreate_rough.py -> Can create a gif starting when the source is turned off and continuming for num_periods with num_pictures output per num_periods
 ## Flux Codes
-- straight_waveguide_recreate_rough -> Can output the flux leaving the index waveguide until the field inside decays by a certain amount.
+- straight_waveguide_recreate_rough.py -> Can output the flux leaving the index waveguide until the field inside decays by a certain amount.
 
 # Matlab Codes
 ## Data Visualization Codes
