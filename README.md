@@ -17,3 +17,5 @@ The new structure of this repo makes it harder to determine the use of all funct
 - straight_waveguide_recreate_rough -> Can output the flux leaving the index waveguide until the field inside decays by a certain amount.
 
 # Matlab Codes
+## Data Visualization Codes
+- Plot_3d_w_black_lines.m -> Outputs a heat map of a 2D slice from a 3D h5 file. Overlays field data on top of eps (structure) data. Must have both a field profile file (or an energy density file) and an eps file to run. The 
