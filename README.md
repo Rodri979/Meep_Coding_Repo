@@ -5,7 +5,7 @@ This repository is split into two sections. One section contains scheme code and
 
 Matlab_Codes contain matlab programs that are used in conjunction with the scheme meep programs. Some of these include a function which sifts through meep "harminv" resonant mode data and find modes which fit a particular catagory  (i.e. Q > 300, amplitude > 0.01 etc...) [mode_finder.m], functions which ouput a txt file of all the particular interesting modes to be used by pic_run [txt_gen.m]. This also contatins mode visualization functions that can plot 2d slices of 3d geometry (eps_plotter.m) and mode profiles (Plot_3d_w_black_lines.m).
 
-The new structure of this repo makes it harder to determine the use of all functions but easier to use the repo in practice below is a structure that lists the functions of certain codes:
+The new structure of this repo makes it harder to determine the use of all functions but easier to use the repo in practice. Below is a structure that lists the functions of certain codes:
 
 # Meep_Codes
 ## Mode Finding Codes
