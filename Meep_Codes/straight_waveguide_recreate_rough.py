@@ -38,6 +38,10 @@ def main(args):
     lip_block = mp.Block(size=mp.Vector3(lip_width,lip_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+0.5*lip_height,0),material=mp.Medium(index=n_bto))
     geometry = [sio2_block,bto_block,lip_block] 
 
+top_area = lip_width*sz # Getting area of top face to normalize bump density of each face
+lip_side_area = lip_height*sz # Getting area of side of lip to normailize bump density
+area_ratio = lip_side_area/top_area
+
 # BUMPS ON TOP
     top_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on top of structure
     top_x_positions = np.random.uniform(-lip_width/2,lip_width/2,top_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
@@ -46,15 +50,15 @@ def main(args):
     top_r = np.random.normal(avg_r_bto_air,std_r_bto_air,top_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON LEFT SIDE
-    left_num_bumps= int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on left of structure
-    left_y_positions = np.random.uniform(sio2_offset + sio2_height*0.5 + bto_height + lip_height,sio2_offset + sio2_height*0.5+ bto_height,left_num_bumps) # random distribution of x-coordinates for the bumps in the lip_height and bto_height
+    left_num_bumps= int(round(np.random.normal(avg_num_bumps*area_ratio,std_num_bumps*area_ratio))) # defining number of bumps on left of structure
+    left_y_positions = np.random.uniform(sio2_offset + sio2_height*0.5 + bto_height,sio2_offset + sio2_height*0.5 + bto_height+ lip_height,left_num_bumps) # random distribution of x-coordinates for the bumps in the lip_height and bto_height
     left_z_positions = np.random.uniform(-sz*0.5,sz*0.5,left_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     left_x_pos = -lip_width*0.5 # Placing top bumps on top plane
     left_r = np.random.normal(avg_r_bto_air,std_r_bto_air,left_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON RIGHT SIDE
-    right_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on right of structure
-    right_y_positions = np.random.uniform(sio2_offset + sio2_height*0.5 + bto_height + lip_height,sio2_offset + sio2_height*0.5 + lip_height,right_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
+    right_num_bumps = int(round(np.random.normal(avg_num_bumps*area_ratio/top_,std_num_bumps))) # defining number of bumps on right of structure
+    right_y_positions = np.random.uniform(sio2_offset + sio2_height*0.5 + bto_height,sio2_offset + sio2_height*0.5 + bto_height + lip_height,right_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
     right_z_positions = np.random.uniform(-sz*0.5,sz*0.5,right_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     right_x_pos = lip_width*0.5 # Placing top bumps on top plane
     right_r = np.random.normal(avg_r_bto_air,std_r_bto_air,right_num_bumps) # defining the radius of the bumps as a normal random variable
@@ -147,7 +151,7 @@ if __name__ == '__main__':
     parser.add_argument('-nfreq', type=int, default=300, help='Number of frequencies to output in flux calc')
     parser.add_argument('-num_periods', type=float, default=5, help='Number of periods to record for gif')
     parser.add_argument('-epsilon', type=float, default=0.1, help='Length of epsilon away from faces for flux planes')
-    parser.add_argument('-avg_num_bumps', type=float, default=50, help='Average of normal dist for num bumps on each face')
+    parser.add_argument('-avg_num_bumps', type=float, default=50, help='Average of normal dist for num bumps top/bot face')
     parser.add_argument('-std_num_bumps', type=float, default=5, help='Std for normal dist of num bumps on each face')
     parser.add_argument('-avg_r_bto_air', type=float, default=0.1, help='Mean radius of bump for BTO-air interface')
     parser.add_argument('-std_r_bto_air', type=float, default=0.02, help='Std for bumps at BTO-air interface')
