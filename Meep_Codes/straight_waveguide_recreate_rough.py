@@ -38,9 +38,9 @@ def main(args):
     lip_block = mp.Block(size=mp.Vector3(lip_width,lip_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+0.5*lip_height,0),material=mp.Medium(index=n_bto))
     geometry = [sio2_block,bto_block,lip_block] 
 
-top_area = lip_width*sz # Getting area of top face to normalize bump density of each face
-lip_side_area = lip_height*sz # Getting area of side of lip to normailize bump density
-area_ratio = lip_side_area/top_area
+    top_area = lip_width*sz # Getting area of top face to normalize bump density of each face
+    lip_side_area = lip_height*sz # Getting area of side of lip to normailize bump density
+    area_ratio = lip_side_area/top_area
 
 # BUMPS ON TOP
     top_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on top of structure
