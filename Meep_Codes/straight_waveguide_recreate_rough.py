@@ -39,28 +39,28 @@ def main(args):
     geometry = [sio2_block,bto_block,lip_block] 
 
 # BUMPS ON TOP
-    top_num_bumps=np.random.normal(avg_num_bumps,std_num_bumps) # defining number of bumps on top of structure
+    top_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on top of structure
     top_x_positions = np.random.uniform(-lip_width/2,lip_width/2,top_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
     top_z_positions = np.random.uniform(-sz*0.5,sz*0.5,top_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     top_y_pos = sio2_offset + sio2_height*0.5 + bto_height + lip_height # Placing top bumps on top plane
     top_r = np.random.normal(avg_r_bto_air,std_r_bto_air,top_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON LEFT SIDE
-    left_num_bumps=np.random.normal(avg_num_bumps,std_num_bumps) # defining number of bumps on left of structure
+    left_num_bumps= int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on left of structure
     left_y_positions = np.random.uniform(sio2_offest + sio2_height*0.5 + bto_height + lip_height,sio2_offest + sio2_height*0.5+ bto_height,left_num_bumps) # random distribution of x-coordinates for the bumps in the lip_height and bto_height
     left_z_positions = np.random.uniform(-sz*0.5,sz*0.5,left_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     left_x_pos = -lip_width*0.5 # Placing top bumps on top plane
     left_r = np.random.normal(avg_r_bto_air,std_r_bto_air,left_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON RIGHT SIDE
-    right_num_bumps = np.random.normal(avg_num_bumps,std_num_bumps) # defining number of bumps on right of structure
+    right_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on right of structure
     right_y_positions = np.random.uniform(sio2_offest + sio2_height*0.5 + bto_height + lip_height,sio2_offest + sio2_height*0.5 + lip_height,right_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
     right_z_positions = np.random.uniform(-sz*0.5,sz*0.5,right_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     right_x_pos = lip_width*0.5 # Placing top bumps on top plane
     right_r = np.random.normal(avg_r_bto_air,std_r_bto_air,right_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON BOTTOM
-    bot_num_bumps=np.random.normal(avg_num_bumps,std_num_bumps) # defining number of bumps on bottom of structure
+    bot_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on bottom of structure
     bot_x_positions = np.random.uniform(-lip_width/2,lip_width/2,bot_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
     bot_z_positions = np.random.uniform(-sz*0.5,sz*0.5,bot_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     bot_y_pos = sio2_offset + sio2_height*0.5 # Placing top bumps on top plane
