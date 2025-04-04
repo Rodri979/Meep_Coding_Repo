@@ -40,7 +40,7 @@ def main(args):
 
     top_area = lip_width*sz # Getting area of top face to normalize bump density of each face
     lip_side_area = lip_height*sz # Getting area of side of lip to normailize bump density
-    area_ratio = lip_side_area/top_area
+    area_ratio = lip_side_area/top_area # Ratio of top area to side area
 
 # BUMPS ON TOP
     top_num_bumps = int(round(np.random.normal(avg_num_bumps,std_num_bumps))) # defining number of bumps on top of structure
@@ -57,7 +57,7 @@ def main(args):
     left_r = np.random.normal(avg_r_bto_air,std_r_bto_air,left_num_bumps) # defining the radius of the bumps as a normal random variable
 
 # BUMPS ON RIGHT SIDE
-    right_num_bumps = int(round(np.random.normal(avg_num_bumps*area_ratio/top_,std_num_bumps))) # defining number of bumps on right of structure
+    right_num_bumps = int(round(np.random.normal(avg_num_bumps*area_ratio,std_num_bumps*area_ratio))) # defining number of bumps on right of structure
     right_y_positions = np.random.uniform(sio2_offset + sio2_height*0.5 + bto_height,sio2_offset + sio2_height*0.5 + bto_height + lip_height,right_num_bumps) # i random distribution of x-coordinates for the bumps in the lip_height and bto_height
     right_z_positions = np.random.uniform(-sz*0.5,sz*0.5,right_num_bumps) # random distribution of z-coordinates for on the top of the waveguide
     right_x_pos = lip_width*0.5 # Placing top bumps on top plane
