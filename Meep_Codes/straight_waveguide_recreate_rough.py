@@ -26,7 +26,7 @@ def main(args):
     std_r_bto_sio2 = args.std_r_bto_sio2 # Std radius of bump on bto_sio2 interface
     sx = 10 # size of cell in x direction (perpendicular to wvg.)
     sy = 4 # size of cell in y direction (perpendicular to wvg.)
-    sz = 1 # size of cell in z direction (parallel to wvg.)
+    sz = 3 # size of cell in z direction (parallel to wvg.)
     pad = 0.1234 # padding between last hole and PML edge
     dpml = 1 # PML thickness
     epsilon = args.epsilon # Defining epsilon value away from faces for flux planes (+ is bigger then waveguide - is smaller)
@@ -119,14 +119,21 @@ def main(args):
 
     sim.k_point = mp.Vector3(0,0,kz)
 
-    left_flux = mp.FluxRegion(center=mp.Vector3(-0.5*lip_width-epsilon,sio2_offset+0.5*(sio2_height+bto_height+lip_height),0),
-                         size=mp.Vector3(0,lip_height + bto_height + 2*epsilon, sz), weight=-1)
-    right_flux = mp.FluxRegion(center=mp.Vector3(0.5*lip_width+epsilon,sio2_offset+0.5*(sio2_height+bto_height+lip_height),0)                         ,size=mp.Vector3(0,lip_height + bto_height + 2*epsilon, sz), weight=1)
-    top_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+lip_height+epsilon,0)                                         ,size=mp.Vector3(lip_width+2*epsilon, 0, sz), weight=1)
-    bottom_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*sio2_height-epsilon,0)                                                            ,size=mp.Vector3(lip_width+2*epsilon, 0, sz), weight=-1)
+    #left_flux = mp.FluxRegion(center=mp.Vector3(-0.5*lip_width-epsilon,sio2_offset+0.5*(sio2_height+bto_height+lip_height),0)                          ,size=mp.Vector3(0,lip_height + bto_height + 2*epsilon, sz), weight=-1)
+    #right_flux = mp.FluxRegion(center=mp.Vector3(0.5*lip_width+epsilon,sio2_offset+0.5*(sio2_height+bto_height+lip_height),0)                         ,size=mp.Vector3(0,lip_height + bto_height + 2*epsilon, sz), weight=1)
+    #top_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+lip_height+epsilon,0)                                         ,size=mp.Vector3(lip_width+2*epsilon, 0, sz), weight=1)
+    #bottom_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*sio2_height-epsilon,0)                                                            ,size=mp.Vector3(lip_width+2*epsilon, 0, sz), weight=-1)
+
+    first_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height),-sz*0.5+sz*(1/3))                                                            ,size=mp.Vector3(lip_width+epsilon,bto_height+lip_height+epsilon, 0), weight=1)
+
+    second_flux = mp.FluxRegion(center=mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height),-sz*0.5+sz*(2/3))                                                            ,size=mp.Vector3(lip_width+epsilon,bto_height+lip_height+epsilon, 0), weight=1)
+
 
     # Adding flux
-    flux = sim.add_flux(freq, df, nfreq, left_flux, right_flux, top_flux, bottom_flux)
+    #flux = sim.add_flux(freq, df, nfreq, left_flux, right_flux, top_flux, bottom_flux)
+
+    flux1 = sim.add_flux(freq, df, nfreq, first_flux)
+    flux2 = sim.add_flux(freq, df, nfreq, second_flux)
     
     if(output_gif):
         sim.run(mp.at_beginning(mp.output_epsilon),
@@ -135,7 +142,7 @@ def main(args):
         sim.run(mp.at_beginning(mp.output_epsilon),
                 until_after_sources=mp.stop_when_fields_decayed(50, mp.Ex, mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height), -0.5*sz+1.5*pad), 1e-2))
 
-        sim.display_fluxes(flux)  # print out the flux spectrum
+        sim.display_fluxes(flux1,flux2)  # print out the flux spectrum
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
