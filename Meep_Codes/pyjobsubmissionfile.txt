@@ -1,0 +1,16 @@
+#!/bin/sh -l
+# FILENAME:  pyjobsubmissionfile
+
+salloc -A pbermel --time=0-04:00:00 --ntasks=10
+
+# Print the hostname of the compute node on which this job is running.
+/bin/hostname
+
+# Change to the directory from which you originally submitted this job.
+cd $SLURM_SUBMIT_DIR
+
+mpirun -np=10 python straight_waveguide_recreate_rough.py -df=0.1 -kz=1.35 -avg_r_bto_air=0.05 -std_r_bto_air=0.01 -avg_r_bto_sio2=0.05 -std_r_bto_sio2=0.01 | tee rough_fluxs_kz1.35.out
+
+
+
+echo "Done"
