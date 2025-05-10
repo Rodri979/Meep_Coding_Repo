@@ -11,7 +11,7 @@ def main(args):
     bto_height = args.bto_height_um # Setting bto height (um)
     sio2_height = args.sio2_height_um # Setting SiO2 height (um)
     output_gif = args.output_gif # True or false value if a gif is to be output
-    sio2_offset = (-2-0.5)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
+    sio2_offset = -sio2_height*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     freq = args.freq # Setting center frequency
     nfreq = args.nfreq # Number of frequencies to calcualte flux for
     df = args.df # Frequnecy spread of source
@@ -140,7 +140,7 @@ def main(args):
                 mp.after_sources(mp.at_every(1/(freq*num_pics), mp.output_dpwr)),until_after_sources=num_periods/freq)
     else:
         sim.run(mp.at_beginning(mp.output_epsilon),
-                until_after_sources=mp.stop_when_fields_decayed(50, mp.Ex, mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height), -0.5*sz+1.5*pad), 1e-2))
+                until_after_sources=mp.stop_when_fields_decayed(50, mp.Ex, mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height), -0.5*sz+1.5*pad), 1e-1))
 
         sim.display_fluxes(flux1,flux2)  # print out the flux spectrum
 
