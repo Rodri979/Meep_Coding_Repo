@@ -13,7 +13,7 @@ def main(args):
     bto_height = args.bto_height_um # Setting bto height (um)
     sio2_height = args.sio2_height_um # Setting SiO2 height (um)
     output_gif = args.output_gif # True or false value if a gif is to be output
-    sio2_offset = (-2-0.5)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
+    sio2_offset = (-sio2_height)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     freq = args.freq # Setting center frequency
     nfreq = args.nfreq # Number of frequencies to calcualte flux for
     df = args.df # Frequnecy spread of source
@@ -34,10 +34,12 @@ def main(args):
     cell = mp.Vector3(sx,sy,sz)
 
     susceptibilities_bto=[mp.LorentzianSusceptibility(frequency=1/0.223, gamma=0, sigma=4.187)]
+    
+    BTO = mp.Medium(epsilon=1, E_susceptibilities=susceptibilities_bto,valid_freq_range=freq_range)
 
     sio2_block = mp.Block(size=mp.Vector3(mp.inf,sio2_height,mp.inf),center=mp.Vector3(0,sio2_offset,0),material=SiO2)
-    bto_block = mp.Block(size=mp.Vector3(mp.inf,bto_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+0.5*bto_height,0),material=mp.Medium(epsilon=1, E_susceptibilities=susceptibilities_bto,valid_freq_range=freq_range))
-    lip_block = mp.Block(size=mp.Vector3(lip_width,lip_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+0.5*lip_height,0),material=mp.Medium(epsilon=1, E_susceptibilities=susceptibilities_bto,valid_freq_range=freq_range))
+    bto_block = mp.Block(size=mp.Vector3(mp.inf,bto_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+0.5*bto_height,0),material=BTO)
+    lip_block = mp.Block(size=mp.Vector3(lip_width,lip_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+0.5*lip_height,0),material=BTO)
     geometry = [sio2_block,bto_block,lip_block]
 
     # SYNTAX FOR APPENDING STRUCTURES
@@ -70,8 +72,7 @@ def main(args):
     flux = sim.add_flux(freq, df, nfreq, left_flux, right_flux, top_flux, bottom_flux)
     
     if(output_gif):
-        sim.run(mp.at_beginning(mp.output_epsilon),
-                mp.after_sources(mp.at_every(1/(freq*num_pics), mp.output_dpwr)),until_after_sources=3*num_periods/freq)
+        sim.run(mp.after_sources(mp.at_every(1/(freq*num_pics), mp.output_dpwr)),until_after_sources=3*num_periods/freq)
     else:
         sim.run(mp.at_beginning(mp.output_epsilon),
                 until_after_sources=mp.stop_when_fields_decayed(50, mp.Ex, mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height), -0.5*sz+1.5*pad), 1e-2))
