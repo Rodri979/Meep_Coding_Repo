@@ -13,7 +13,6 @@ def main(args):
     bto_height = args.bto_height_um # Setting bto height (um)
     sio2_height = args.sio2_height_um # Setting SiO2 height (um)
     output_gif = args.output_gif # True or false value if a gif is to be output
-    sio2_offset = (-sio2_height)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     freq = args.freq # Setting center frequency
     nfreq = args.nfreq # Number of frequencies to calcualte flux for
     df = args.df # Frequnecy spread of source
@@ -27,6 +26,7 @@ def main(args):
     sx = 10 # size of cell in x direction (perpendicular to wvg.)
     sy = 4 # size of cell in y direction (perpendicular to wvg.)
     sz = 1 # size of cell in z direction (parallel to wvg.)
+    sio2_offset = (sio2_height-sy)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     pad = 0.1234 # padding between last hole and PML edge
     dpml = 1 # PML thickness
     epsilon = args.epsilon # Defining epsilon value away from faces for flux planes (+ is bigger then waveguide - is smaller)
@@ -72,7 +72,7 @@ def main(args):
     flux = sim.add_flux(freq, df, nfreq, left_flux, right_flux, top_flux, bottom_flux)
     
     if(output_gif):
-        sim.run(mp.after_sources(mp.at_every(1/(freq*num_pics), mp.output_dpwr)),until_after_sources=3*num_periods/freq)
+        sim.run(mp.at_every(1/(freq*num_pics), mp.output_dpwr),until=num_periods/freq)
     else:
         sim.run(mp.at_beginning(mp.output_epsilon),
                 until_after_sources=mp.stop_when_fields_decayed(50, mp.Ex, mp.Vector3(0,sio2_offset+0.5*(sio2_height+bto_height+lip_height), -0.5*sz+1.5*pad), 1e-2))

@@ -11,7 +11,6 @@ def main(args):
     bto_height = args.bto_height_um # Setting bto height (um)
     sio2_height = args.sio2_height_um # Setting SiO2 height (um)
     output_gif = args.output_gif # True or false value if a gif is to be output
-    sio2_offset = (-2-0.5)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     freq = args.freq # Setting center frequency
     nfreq = args.nfreq # Number of frequencies to calcualte flux for
     df = args.df # Frequnecy spread of source
@@ -24,6 +23,7 @@ def main(args):
     sz = 1 # size of cell in z direction (parallel to wvg.)
     pad = 0.1234 # padding between last hole and PML edge
     dpml = 1 # PML thickness
+    sio2_offset = (sio2_height-sy)*0.5 # Value to bring sio2 down to make the structure in the center of simulation zone
     epsilon = args.epsilon # Defining epsilon value away from faces for flux planes (+ is bigger then waveguide - is smaller)
 
     cell = mp.Vector3(sx,sy,sz)
