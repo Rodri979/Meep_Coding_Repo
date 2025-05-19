@@ -30,6 +30,8 @@ def main(args):
     pad = 0.1234 # padding between last hole and PML edge
     dpml = 1 # PML thickness
     epsilon = args.epsilon # Defining epsilon value away from faces for flux planes (+ is bigger then waveguide - is smaller)
+    
+    buffer_width = args.buffer_width
 
     cell = mp.Vector3(sx,sy,sz)
 
@@ -37,10 +39,17 @@ def main(args):
     
     BTO = mp.Medium(epsilon=1, E_susceptibilities=susceptibilities_bto,valid_freq_range=freq_range)
 
-    sio2_block = mp.Block(size=mp.Vector3(mp.inf,sio2_height,mp.inf),center=mp.Vector3(0,sio2_offset,0),material=SiO2)
+    sio2_block = mp.Block(size=mp.Vector3(mp.inf,sio2_height-buffer_width,mp.inf),center=mp.Vector3(0,sio2_offset,0),material=SiO2)
+    sio2_block_bottom = mp.Block(size=mp.Vector3(mp.inf,buffer_width,mp.inf),center=mp.Vector3(0,(buffer_width-sy)*0.5,0),material=mp.Medium(index=n_sio2))
     bto_block = mp.Block(size=mp.Vector3(mp.inf,bto_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+0.5*bto_height,0),material=BTO)
     lip_block = mp.Block(size=mp.Vector3(lip_width,lip_height,mp.inf),center=mp.Vector3(0,sio2_offset+0.5*sio2_height+bto_height+0.5*lip_height,0),material=BTO)
-    geometry = [sio2_block,bto_block,lip_block]
+    left_bto_buffer = mp.Block(size=mp.Vector3(buffer_width,bto_height,mp.inf),center=mp.Vector3((buffer_width-sx)*0.5,sio2_offset+0.5(sio2_height+bto_height),0),material=mp.Medium(index=n_bto))
+    right_bto_buffer = mp.Block(size=mp.Vector3(buffer_width,bto_height,mp.inf),center=mp.Vector3(-(buffer_width-sx)*0.5,sio2_offset+0.5(sio2_height+bto_height),0),material=mp.Medium(index=n_bto))
+    left_sio2_buffer = mp.Block(size=mp.Vector3(buffer_width,sio2_height,mp.inf),center=mp.Vector3((buffer_width-sx)*0.5,sio2_offset,0),material=mp.Medium(index=n_sio2))
+    right_sio2_buffer = mp.Block(size=mp.Vector3(buffer_width,sio2_height,mp.inf),center=mp.Vector3(-(buffer_width-sx)*0.5,sio2_offset,0),material=mp.Medium(index=n_sio2))
+
+
+    geometry = [sio2_block,bto_block,lip_block,sio2_block_bottom,left_bto_buffer,right_bto_buffer,left_sio2_buffer,right_sio2_buffer]
 
     # SYNTAX FOR APPENDING STRUCTURES
     # for i in range(N):
@@ -93,6 +102,7 @@ if __name__ == '__main__':
     parser.add_argument('-nfreq', type=int, default=300, help='Number of frequencies to output in flux calc')
     parser.add_argument('-num_periods', type=float, default=5, help='Number of periods to record for gif')
     parser.add_argument('-epsilon', type=float, default=0.1, help='Length of epsilon away from faces for flux planes')
+    parser.add_argument('-buffer_width', type=float, default=0.5, help='Width of buffer used for material inside pml')
     args = parser.parse_args()
     main(args)
 
