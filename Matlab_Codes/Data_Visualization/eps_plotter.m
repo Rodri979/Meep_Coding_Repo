@@ -33,7 +33,7 @@ if(length(data_size) == 3)
             warning('%s is an unexpected slice dimension please choose x, y, or z', slice)
             return
     end
-elseif((length(size(eps_data)) == 2) && (data_size(1) ~= 1))
+elseif((length(data_size) == 2) && (data_size(1) ~= 1))
     eps_slice = eps_data
 end
 
