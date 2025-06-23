@@ -20,18 +20,23 @@ function eps_plotter(eps_data, slice, slice_num, resolution)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 eps_data = h5read(eps_data, "/eps");
-
-switch slice
-    case 'z'
-        eps_slice = squeeze(eps_data(slice_num, :, :));
-    case 'y'
-        eps_slice = squeeze(eps_data(:, slice_num, :));
-    case 'x'
-        eps_slice = squeeze(eps_data(:, :, slice_num));
-    otherwise
-        warning('%s is an unexpected slice dimension please choose x, y, or z', slice)
-        return
+data_size = size(eps_data)
+if(length(data_size) == 3)
+    switch slice
+        case 'z'
+            eps_slice = squeeze(eps_data(slice_num, :, :));
+        case 'y'
+            eps_slice = squeeze(eps_data(:, slice_num, :));
+        case 'x'
+            eps_slice = squeeze(eps_data(:, :, slice_num));
+        otherwise
+            warning('%s is an unexpected slice dimension please choose x, y, or z', slice)
+            return
+    end
+elseif((length(size(eps_data)) == 2) && (data_size(1) ~= 1))
+    eps_slice = eps_data
 end
+
 
 % Visualize the 2D slice
 figure;
