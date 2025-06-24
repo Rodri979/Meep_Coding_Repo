@@ -20,17 +20,22 @@ function [maximum, minimum] = pull_max_min(ez_h5, ez_code, slice, slice_num)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ez_data = h5read(ez_h5, ez_code);
+data_size = size(ez_data)
 
-switch slice
-    case 'z'
-        ez_slice = squeeze(ez_data(slice_num, :, :));
-    case 'y'
-        ez_slice = squeeze(ez_data(:, slice_num, :));
-    case 'x'
-        ez_slice = squeeze(ez_data(:, :, slice_num));
-    otherwise
-        warning('%s is an unexpected slice dimension please choose x, y, or z', slice)
-        return
+if(length(data_size) == 3)
+    switch slice
+        case 'z'
+            ez_slice = squeeze(ez_data(slice_num, :, :));
+        case 'y'
+            ez_slice = squeeze(ez_data(:, slice_num, :));
+        case 'x'
+            ez_slice = squeeze(ez_data(:, :, slice_num));
+        otherwise
+            warning('%s is an unexpected slice dimension please choose x, y, or z', slice)
+            return
+    end
+elseif((length(data_size) == 2) && (data_size(1) ~= 1))
+    ez_slice = ez_data
 end
 
 maximum = max(ez_slice, [], "all");
