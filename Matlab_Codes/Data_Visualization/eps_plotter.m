@@ -20,7 +20,7 @@ function eps_plotter(eps_data, slice, slice_num, resolution)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 eps_data = h5read(eps_data, "/eps");
-data_size = size(eps_data)
+data_size = size(eps_data);
 if(length(data_size) == 3)
     switch slice
         case 'z'
@@ -34,7 +34,7 @@ if(length(data_size) == 3)
             return
     end
 elseif((length(data_size) == 2) && (data_size(1) ~= 1))
-    eps_slice = eps_data
+    eps_slice = eps_data;
 end
 
 
