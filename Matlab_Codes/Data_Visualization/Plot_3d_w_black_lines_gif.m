@@ -39,7 +39,7 @@ eps_data = h5read(eps_h5, eps_code);
 ez_data = h5read(ez_h5, ez_code);
 w_b_color = [1 1 1; 0 0 0]; % Defining a colormap with black for high values
 b_w_color = [0 0 0; 1 1 1]; % Defining a colormap with white for high values
-data_size = size(eps_data)
+data_size = size(eps_data);
 
 if(length(data_size) == 3)
     switch slice
@@ -57,8 +57,8 @@ if(length(data_size) == 3)
             return
     end
 elseif((length(data_size) == 2) && (data_size(1) ~= 1))
-    eps_slice = eps_data
-    ez_slice = ez_data
+    eps_slice = eps_data;
+    ez_slice = ez_data;
 end
 
 figure;
