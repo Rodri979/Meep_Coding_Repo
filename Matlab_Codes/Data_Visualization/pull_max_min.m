@@ -20,7 +20,7 @@ function [maximum, minimum] = pull_max_min(ez_h5, ez_code, slice, slice_num)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ez_data = h5read(ez_h5, ez_code);
-data_size = size(ez_data)
+data_size = size(ez_data);
 
 if(length(data_size) == 3)
     switch slice
@@ -35,7 +35,7 @@ if(length(data_size) == 3)
             return
     end
 elseif((length(data_size) == 2) && (data_size(1) ~= 1))
-    ez_slice = ez_data
+    ez_slice = ez_data;
 end
 
 maximum = max(ez_slice, [], "all");
