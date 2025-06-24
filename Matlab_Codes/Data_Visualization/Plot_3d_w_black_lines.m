@@ -52,8 +52,8 @@ if(length(data_size) == 3)
             return
     end
 elseif((length(data_size) == 2) && (data_size(1) ~= 1))
-    eps_slice = eps_data
-    ez_slice = ez_data
+    eps_slice = eps_data;
+    ez_slice = ez_data;
 end
 
 figure;
