@@ -1,4 +1,4 @@
-function param_opt = fitNlorentzean(data,manual_peak_set,num_peaks, re_frac, im_frac)
+function param_opt = fitNlorentzean(data,manual_peak_set,num_peaks, re_frac, im_frac, material)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function currently takes the expiremental data for both real and
 % imaginary epsilon plots and the number of peaks desired to fit a
@@ -157,7 +157,7 @@ if(manual_peak_set)
     param_opt = best_param_opt;
     % fval = best_fval;
     View_Dispersion(param_opt(3:3:(3*num_peaks+1)), param_opt(4:3:(3*num_peaks+1)), param_opt(2:3:(3*num_peaks+1)),  ...
-        param_opt(1), min(1./freq_meep_dat), max(1./freq_meep_dat), 1000, "BTO")
+        param_opt(1), min(1./freq_meep_dat), max(1./freq_meep_dat), 1000, material, data)
     figure(7)
     scatter((1./freq_meep_dat),eps_re_dat)
     title("Real Eps Data")
