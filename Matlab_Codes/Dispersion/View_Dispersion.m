@@ -63,8 +63,9 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     plot(lambda_vec,n_0)
     scatter(data_lambda, data_n_0)
     title(title_1)
-    xlabel('lambda (um)')
+    xlabel('Wavelength (um)')
     ylabel('n_0')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
     title_2 = material + " n_0 by Energy";
@@ -75,26 +76,29 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     title(title_2)
     xlabel('E (eV)')
     ylabel('n_0')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
-    title_3 = material + " Real epsilon by Wavelength";
+    title_3 = material + " Real \epsilon by Wavelength";
     figure(3)
     hold on
     plot(lambda_vec,eps_re)
     scatter(data_lambda, data(:,2))
     title(title_3)
-    xlabel('lambda (um)')
-    ylabel('real eps')
+    xlabel('Wavelegnth (um)')
+    ylabel('real \epsilon')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
-    title_4 = material + " Imaginary Epsilon by Wavelength";
+    title_4 = material + " Imaginary \epsilon by Wavelength";
     figure(4)
     hold on
     plot(lambda_vec,eps_im)
     scatter(data_lambda, data(:,3))
     title(title_4)
-    xlabel('lambda (um)')
-    ylabel('im eps')
+    xlabel('Wavelength (um)')
+    ylabel('im \epsilon')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
     title_5 = material + " Extintion Coefficient by Wavelength";
@@ -103,8 +107,9 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     plot(lambda_vec,kappa)
     scatter(data_lambda, data_kappa)
     title(title_5)
-    xlabel('lambda (um)')
-    ylabel('kappa')
+    xlabel('Wavelength (um)')
+    ylabel('\kappa')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
     title_6 = material + " Extinction Coefficient by Energy";
@@ -113,8 +118,9 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     plot(Evs,kappa)
     scatter(data_Evs, data_kappa)
     title(title_6)
-    xlabel('E (eV')
-    ylabel('kappa')
+    xlabel('E (eV)')
+    ylabel('\kappa')
+    legend('Model','Experiment', 'Location', 'best')
     hold off
 
 else
