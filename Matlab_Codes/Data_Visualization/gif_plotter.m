@@ -1,4 +1,4 @@
-function gif_plotter(directory, eps_file, slice, slice_num, resolution, title)
+function gif_plotter(directory, eps_file, slice, slice_num, resolution, ez_code, title)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   gif_plotter plots all modes in a directory. IT MUST ONLY CONTATION THE 
 %   H5 denergy FILES OUTPUT FROM A MEEP SIMULATION. It is meant to plot all
@@ -51,10 +51,10 @@ end
 
 %disp(pic_names)
 
-[max_field, min_field] = pull_max_min("./" + directory + "/" + pic_names(1), "/denergy", slice, slice_num);
+[max_field, min_field] = pull_max_min("./" + directory + "/" + pic_names(1), ez_code, slice, slice_num);
    
 for graph_index = 2:1:length(pic_names)
-    [temp_max, temp_min] = pull_max_min("./" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num);
+    [temp_max, temp_min] = pull_max_min("./" + directory + "/" + pic_names(graph_index), ez_code, slice, slice_num);
     if temp_max > max_field
         max_field = temp_max;
     end
@@ -64,7 +64,7 @@ for graph_index = 2:1:length(pic_names)
 end
 
 for graph_index = 1:1:length(pic_names)
-    Plot_3d_w_black_lines_gif(eps_file, "/eps", "./" + directory + "/" + pic_names(graph_index), "/denergy", slice, slice_num, max_field, min_field, resolution, title)
+    Plot_3d_w_black_lines_gif(eps_file, "/eps", "./" + directory + "/" + pic_names(graph_index), ez_code, slice, slice_num, max_field, min_field, resolution, title)
     fprintf(num2str(graph_index) + ": " + pic_names(graph_index))
     fprintf("\n")
     png_name = directory + "/" + slice + "_" + num2str(slice_num) + "_" + strrep(pic_names(graph_index),"h5","png");
