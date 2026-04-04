@@ -1,4 +1,4 @@
-function param_opt = fitNlorentzean(data,manual_peak_set,num_peaks, re_frac, im_frac, material)
+function param_opt = fitNlorentzean(data,manual_peak_set,num_peaks, re_frac, im_frac, lb, ub, material)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function currently takes the expiremental data for both real and
 % imaginary epsilon plots and the number of peaks desired to fit a
@@ -57,8 +57,8 @@ if(manual_peak_set)
     syms eps_infin real
     syms gamma_n [1 num_peaks]
     assume(gamma_n >= 0);
-    syms sigma [1 num_peaks]
-    assume(sigma >= 0);
+    syms sig [1 num_peaks]
+    assume(sig >= 0);
     syms w_0_ [1 num_peaks]
     assume(w_0_ >= 0);
     syms omega
@@ -115,19 +115,46 @@ if(manual_peak_set)
 
 
     end
-    param_guess = 10 * rand((3*num_peaks + 1),1); % Random initial values
+    %param_guess = 10 * rand((3*num_peaks + 1),1); % Random initial values
     if (size(data,2)>2)
         err_func_num = sum(subs(err_func_re, {eps_re_point, omega, eps_im_point}, {eps_re_dat, freq_meep_dat, eps_im_dat}));
     else
         err_func_num = sum(subs(err_func_re, {eps_re_point, omega}, {eps_re_dat, freq_meep_dat}));
     end
     err_func_num = matlabFunction(err_func_num, 'Vars', {param_vec});
-    lb = zeros((3*num_peaks + 1),1); % Lower bound (all parameters >= 0)
-    ub = []; % No upper bound
+    %lb = zeros((3*num_peaks + 1),1); % Lower bound (all parameters >= 0)
+    %lb = [1, 0, 0.1, 0];
+    %ub = [10, 500, 0.4, 10]; % No upper bound
+    param_guess = transpose(lb + (ub-lb) .* rand(size(lb)));
     options = optimoptions('fmincon','Display','off','MaxFunctionEvaluations', 1e6);
+    %options = optimoptions('simulannealbnd','Display','off','MaxIterations',1e6, ...
+    %    'HybridFcn', {@fmincon, optimoptions('fmincon','Display','off')}, ...
+    %    'AnnealingFcn', @annealingboltz, 'MaxFunctionEvaluations', 1e6);
+    %options = optimoptions('simulannealbnd','Display','off','MaxIterations',5e6, ...
+    %    'MaxFunctionEvaluations', 5e6, 'InitialTemperature',50, 'AnnealingFcn','annealingboltz','TemperatureFcn','temperatureexp');
+    %'PlotFcns', {@saplotbestf, @saplottemperature, @saplotf}, ...
+            %'StallIterLimit', 1e6, ...
+            %'MaxFunctionEvaluations', 1e8, 'FunctionTolerance', 0, ...
     fprintf("Finding Minima ...\n")
     warning('off', 'all')
-    [best_param_opt, best_fval] = fmincon(err_func_num, param_guess, [], [], [], [], lb, ub, [], options);
+%     [best_param_opt,best_fval] = simulannealbnd(err_func_num, param_guess, lb, ub, options);
+%     scale = 10;
+%     step = 20;
+%     for trial = 1:500
+%         fprintf("Trial: %d\n", trial)
+%         param_guess = scale * rand((3*num_peaks + 1),1); % Random starting values
+%         [param_opt_temp, fval_temp] = simulannealbnd(err_func_num, param_guess, lb, ub, options);
+%         if fval_temp < best_fval
+%             fprintf("New Minimum: %.2e\n", fval_temp)
+%             best_fval = fval_temp;
+%             best_param_opt = param_opt_temp;
+%         end
+%         %if (mod(trial,10) == 0)
+%         %    scale = scale + step;
+%         %end
+%     end
+%     options = optimoptions('fmincon','Display','off','MaxFunctionEvaluations', 1e6);
+     [best_param_opt, best_fval] = fmincon(err_func_num, param_guess, [], [], [], [], lb, ub, [], options);
 %     for trial = 1:10
 %         fprintf("Trial: %d\n", trial)
 %         param_guess = 10 * rand((3*num_peaks + 1),1); % Random initial values
@@ -142,34 +169,23 @@ if(manual_peak_set)
 %             best_param_opt = param_opt_temp;
 %         end
 %     end
-    for trial = 1:500
-        fprintf("Trial: %d\n", trial)
-        param_guess = 20 * rand((3*num_peaks + 1),1); % Random starting values
-        [param_opt_temp, fval_temp] = fmincon(err_func_num, param_guess, [], [], [], [], lb, ub, [], options);
+   for trial = 1:500
+       fprintf("Trial: %d\n", trial)
+       %param_guess = 10 * rand((3*num_peaks + 1),1); % Random starting values
+       param_guess = transpose(mean([lb; ub], 1) - lb.*0.5 + 0.5.*(ub-lb) .* rand(size(lb)));
+       [param_opt_temp, fval_temp] = fmincon(err_func_num, param_guess, [], [], [], [], lb, ub, [], options);
 
-        if fval_temp < best_fval
-            fprintf("New Minimum: %.2e\n", fval_temp)
-            best_fval = fval_temp;
-            best_param_opt = param_opt_temp;
-        end
-    end
+       if fval_temp < best_fval
+           fprintf("New Minimum: %.2e\n", fval_temp)
+           best_fval = fval_temp;
+           best_param_opt = param_opt_temp;
+       end
+   end
     warning('on', 'all')
     param_opt = best_param_opt;
-    % fval = best_fval;
+    %fval = best_fval;
     View_Dispersion(param_opt(3:3:(3*num_peaks+1)), param_opt(4:3:(3*num_peaks+1)), param_opt(2:3:(3*num_peaks+1)),  ...
         param_opt(1), min(1./freq_meep_dat), max(1./freq_meep_dat), 1000, material, data)
-    figure(7)
-    scatter((1./freq_meep_dat),eps_re_dat)
-    title("Real Eps Data")
-    xlabel("\lambda (um)")
-    ylabel("Re Eps")
-    if size(data,2)>2
-        figure(8)
-        scatter((1./freq_meep_dat),eps_im_dat)
-        title("Imaginary Eps Data")
-        xlabel("\lambda (um)")
-        ylabel("Im Eps")
-    end
     % crit_points = vpasolve(grad_err == 0, param_vec,rand*ones(10,1));
 %     fprintf("Computing Hessian ...\n")
 %     H = hessian(err_func,param_vec);
