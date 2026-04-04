@@ -32,6 +32,7 @@ h = 4.1357 * 10^-15; % Planks const eV-s
 lambda_vec = transpose(lambda_min:((lambda_max-lambda_min)/num_points):lambda_max); % Wavelength vector
 data = data(((1./data(:,1)) >= lambda_min) & ((1./data(:,1)) <= lambda_max),:); % Cutting data to fit lambda range
 data_lambda = 1./data(:,1); % Data wavelengths
+data_freqs = 1 ./ data_lambda;
 data_Evs = h .* c ./ (data_lambda .* 10^-6); % Data energies
 freqs = 1 ./ lambda_vec; % Frequency vector (meep units)
 
@@ -123,6 +124,27 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     legend('Model','Experiment', 'Location', 'best')
     hold off
 
+    title_7 = material + " Real \epsilon by \omega";
+    figure(7)
+    hold on
+    plot(freqs,eps_re)
+    scatter(data_freqs, data(:,2))
+    title(title_7)
+    xlabel('\omega (meep units)')
+    ylabel('real \epsilon')
+    legend('Model','Experiment', 'Location', 'best')
+    hold off
+
+    title_8 = material + " Imaginary \epsilon by \omega";
+    figure(8)
+    hold on
+    plot(freqs,eps_im)
+    scatter(data_freqs, data(:,3))
+    title(title_8)
+    xlabel('\omega (meep units)')
+    ylabel('im \epsilon')
+    legend('Model','Experiment', 'Location', 'best')
+    hold off
 else
     warning("Error: Make sure that the length of w_0_n = gamma_n = sigma_n \n \n")
 end
