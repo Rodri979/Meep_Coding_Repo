@@ -1,15 +1,35 @@
 %% INTERACTIVE LONGITUDINAL VIEWER (X-Z PLANE)
-% This script must be executed AFTER the FD_BPM(P) solver finishes.
-Model = P;
+%{
+- This is a longitudinal viewer for the electric field X-Z planes. In its
+user interface, you can select three types of plots:
+    - real part of electric field (Re(E));
+    - absolute intensity (|E|^2);
+    - phase;
+- You can also set the Y value of the plane to plot.
+
+INSTRUCTIONS:
+- This script must be executed AFTER the FD_BPM(P) solver finishes.
+- You need to set P.storeE3D to true before the previous simulation
+starts. If not set, run the simulation again.
+- The 'P.updates' attribute sets how many points of the e-field are stored
+in the 3D maps along the Z-direction and influences directly in the plot. 
+Change it to adjust the resolution.
+- Do NOT run 'clear' before running this script, as it uses existant 
+workspace variables. If ran, run the simulation again.
+%}
+
+% Change the name of the model below if not P (BPMmatlab.model object 
+% as initialized before). 
+BPM_model = P;
 
 % 1. Concatenate data from all segments into 3D blocks
-E_total = cat(3, Model.E3D{:});
-n_total = cat(3, Model.n3D{:});
+E_total = cat(3, BPM_model.E3D{:});
+n_total = cat(3, BPM_model.n3D{:});
 
 % Convert axis vectors to micrometers for readability
-z_coords = Model.z * 1e6; 
-x_coords = Model.x * 1e6; 
-y_coords = Model.y * 1e6; 
+z_coords = BPM_model.z * 1e6; 
+x_coords = BPM_model.x * 1e6; 
+y_coords = BPM_model.y * 1e6; 
 
 % 2. Find the central Y index (usually near Y = 0)
 [~, current_y_idx] = min(abs(y_coords)); 

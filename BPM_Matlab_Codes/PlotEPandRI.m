@@ -1,6 +1,8 @@
 %% Material Optical Properties Plotter (Interactive)
-% This script reads optical constants from TXT files and allows the user 
-% to dynamically switch between Permittivity (e1, e2) and Refractive Index (n, k).
+%{
+This script reads optical constants from TXT files and allows the user 
+to dynamically switch between Permittivity (e1, e2) and Refractive Index (n, k).
+%}
 
 % File paths
 file_ablated = 'material_data/Ablated.txt';
