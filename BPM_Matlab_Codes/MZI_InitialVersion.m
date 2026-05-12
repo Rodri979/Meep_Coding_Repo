@@ -159,8 +159,8 @@ fprintf("Segment 4 length = %.3f um\n", seg_4_len*1e6);
 % deltaN = 0.8384 -> destructive interference. Set it up here and comment
 % 'ablated_n_offset = 0;' line:
 
-ablated_n_offset = 0.8384;
-% ablated_n_offset = 0;
+% ablated_n_offset = 0.8384;
+ablated_n_offset = 0;
 
 P = initializeRIfromFunction(P, @calcRIseg4, {core_height, core_width,...
                                  ablated_n_tilde, bare_n_tilde, sio2_n, d, ablated_n_offset});

@@ -7,11 +7,12 @@ segment was added: the taper.
     1: initial 3um-long straight section with 1.1413um of width;
 
     2 and 3: curved sections with the same setup as the original MZI.
-    OPTIMIZATION: arcs now have a radius of 8um.
+    OPTIMIZATION: arcs now have a radius of 41.5um.
 
-    4: intermediate straight segment. OPTIMIZATION: now 100um long. One of
-    the arms may have different refractive index (deltaN = 0.01121) to
-    induce phase difference and destructive interference.
+    4: intermediate straight segment, consisting of two straight waveguides
+    that represent the MZI's arms. It is 1.337 um long. One of them may
+    have different refractive index (deltaN = 0.8384) to induce destructive
+    interference;
 
     5 and 6: combiner section. Same arc radius as sections 2 and 3.
 
@@ -31,7 +32,7 @@ P.useGPU = false;       % (Default: false) Use CUDA acceleration for NVIDIA GPUs
 % Available on Windows only.
 
 %% Visualization parameters
-P.updates = 15;      % Number of times to update plot. Must be at least 1, 
+P.updates = 1;      % Number of times to update plot. Must be at least 1, 
 % showing the final state.
 P.plotEmax = 0.5;   % Max of color scale in the intensity plot, relative to
 % the peak of initial intensity
@@ -71,7 +72,7 @@ P.n_background = 1; % [] (may be complex) Background refractive index
 %% Splitter and combiner geometric parameters
 
 % OPTIMIZATION 1: new curved sections' radius
-R = 8e-6;           % [m] circular section radius
+R = 41.5e-6;           % [m] circular section radius
 d = 1.9735e-6;      % [m] maximum distance between the two arms centers 
 
 curved_sections_length = sqrt((d*R)/2 - d^2/16);
@@ -153,12 +154,13 @@ P = FD_BPM(P);
 P.figTitle = 'Segment 4';
 
 % [m] z propagation distances for this segment
-P.Lz = 100e-6;
+P.Lz = 1.337e-6;
 
 % deltaN = 0.8384 -> destructive interference. Set it up here and comment
 % 'ablated_n_offset = 0;' line:
 
-% ablated_n_offset = 0.01121;
+% ablated_n_offset = 0.8384;
+
 ablated_n_offset = 0;
 
 P = initializeRIfromFunction(P, @calcRIseg4, {core_height, core_width,...

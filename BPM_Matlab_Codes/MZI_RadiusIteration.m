@@ -63,22 +63,22 @@ x_core_end   = ceil(center + res*core_width/2);
 y_core_start = ceil(center - res*core_height/2);
 y_core_end   = ceil(center + res*core_height/2);
 
-% %% Output File Preparation
-% if ~exist('out_data', 'dir')
-%     mkdir('out_data');
-% end
-% 
-% % Path and name of the file to be created
-% filename = 'out_data/MZI_Radius_Iteration_NoAblAbsorp.csv';
-% file_exists = exist(filename, 'file');
-% 
-% % Open the file identifier. If the file doesn't exist, write the header
-% fid = fopen(filename, 'a');
-% if ~file_exists
-%     fprintf(fid, 'radius [um],guidedIn/totalIn [%%],guidedOut/totalOut[%%],guidedOut/guidedIn [%%]\n');
-% end
-% % Close the file identifier
-% fclose(fid);
+%% Output File Preparation
+if ~exist('out_data', 'dir')
+    mkdir('out_data');
+end
+
+% Path and name of the file to be created
+filename = 'out_data/MZI_Radius_Iteration_NoAblAbsorp.csv';
+file_exists = exist(filename, 'file');
+
+% Open the file identifier. If the file doesn't exist, write the header
+fid = fopen(filename, 'a');
+if ~file_exists
+    fprintf(fid, 'radius [um],guidedIn/totalIn [%%],guidedOut/totalOut[%%],guidedOut/guidedIn [%%]\n');
+end
+% Close the file identifier
+fclose(fid);
 
 %% Segment 1
 P.Lz = 3e-6; % [m] z propagation distances for this segment
@@ -103,9 +103,8 @@ P.figTitle = 'Segment 1';
 
 P = FD_BPM(P);
 
-%% Enter the loop: iterating from R = 5 to 50um, in 0.5um steps.
-for i = 5
-% for i = 5:0.5:50
+%% Loop: iterating from R = 5 to 50um, in 0.5um steps.
+for i = 5:0.5:50
     R = i * 1e-6;
     curved_sections_length = sqrt((d*R)/2 - d^2/16);
 
@@ -144,7 +143,7 @@ for i = 5
     % [m] z propagation distances for this segment
     Q.Lz = 1.337e-6;
 
-    ablated_n_offset = 0.8384;
+    ablated_n_offset = 0;
 
     Q = initializeRIfromFunction(Q, @calcRIseg4, {core_height, core_width,...
                                  ablated_n_tilde, bare_n_tilde, sio2_n, d, ablated_n_offset});
@@ -229,12 +228,12 @@ for i = 5
     fprintf('Guided_out / Total_out: %.8f (%.2f%%)\n\n', guided_out_total_out, ...
         guided_out_total_out*100);
 
-    % % Append to CSV
-    % fid = fopen(filename, 'a');
-    % fprintf(fid, '%.1f,%.2f,%.2f,%.2f\n', ...
-    %         i, (guided_in_total_in*100), (guided_out_total_out*100), ...
-    %         (guided_out_guided_in*100));
-    % fclose(fid);
+    % Append to CSV
+    fid = fopen(filename, 'a');
+    fprintf(fid, '%.1f,%.2f,%.2f,%.2f\n', ...
+            i, (guided_in_total_in*100), (guided_out_total_out*100), ...
+            (guided_out_guided_in*100));
+    fclose(fid);
 end
 
 %% Read tables
