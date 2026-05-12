@@ -2,6 +2,7 @@
 %{
 This is a BPM-Matlab implementation of a MZI. The ablated section is always
 1um high. It is 16um long in total and consists of 7 segments:
+
     1: initial 3um-long straight section with 1.1413um of width;
 
     2 and 3: curved sections, used to split the electrical field in two. 
@@ -17,8 +18,7 @@ This is a BPM-Matlab implementation of a MZI. The ablated section is always
     5 and 6: represent the combiner section, with the same 5um-radius arcs
     of the splitter.
 
-    7: final 3um-long straight section with 1.1413um width and 1um 
-    height.
+    7: final 3um-long straight section with 1.1413um width and 1um height.
 %}
 P = BPMmatlab.model;
 
@@ -28,10 +28,10 @@ P.useAllCPUs = true;    % If false, BPM-Matlab will leave one processor unused.
 % Useful for doing other work on the PC while simulations are running.
 
 P.useGPU = false;       % (Default: false) Use CUDA acceleration for NVIDIA GPUs.
-% Works on Windows only.
+% Available on Windows only.
 
 %% Visualization parameters
-P.updates = 15;      % Number of times to update plot. Must be at least 1, 
+P.updates = 1;      % Number of times to update plot. Must be at least 1, 
 % showing the final state.
 P.plotEmax = 0.5;   % Max of color scale in the intensity plot, relative to
 % the peak of initial intensity
@@ -44,7 +44,7 @@ P.plotEmax = 0.5;   % Max of color scale in the intensity plot, relative to
 % Uncomment line below to save a 3D map of the electric field, needed to
 % use the Longitudinal Viewer.
 
-P.storeE3D = true;
+% P.storeE3D = true;
 
 %% Resolution-related parameters (check for convergence)
 P.Lx_main = 8e-6;       % [m] x side length of main area
@@ -127,6 +127,7 @@ P.figTitle = 'Segment 2';
 % [m] z propagation distances for this segment
 P.Lz = curved_sections_length;
 
+% Number of slices in z-direction for this segment.
 Nz_n = ceil(P.Lz / P.dz_target);
 
 P = initializeRIfromFunction(P,@calcRIseg2,{core_height, core_width,...
@@ -148,15 +149,18 @@ P = FD_BPM(P);
 
 %% Segment 4
 P.figTitle = 'Segment 4';
-seg_4_len = 16e-6 - 4*curved_sections_length - 6e-6;
 
 % [m] z propagation distances for this segment
+seg_4_len = 16e-6 - 4*curved_sections_length - 6e-6;
 P.Lz = seg_4_len;
+
 fprintf("Segment 4 length = %.3f um\n", seg_4_len*1e6);
 
-% deltaN = 0.8384 -> destructive interference. Set it up here:
-% ablated_n_offset = 0.8384;
-ablated_n_offset = 0;
+% deltaN = 0.8384 -> destructive interference. Set it up here and comment
+% 'ablated_n_offset = 0;' line:
+
+ablated_n_offset = 0.8384;
+% ablated_n_offset = 0;
 
 P = initializeRIfromFunction(P, @calcRIseg4, {core_height, core_width,...
                                  ablated_n_tilde, bare_n_tilde, sio2_n, d, ablated_n_offset});
@@ -183,9 +187,6 @@ P = initializeRIfromFunction(P,@calcRIseg6,{core_height, core_width,...
                              ablated_n_tilde, bare_n_tilde, R, sio2_n, d}, ...
                              Nz_n);
 P = FD_BPM(P);
-
-elecFieldCrossSec_cpx = P.E.field(265:335,300);
-electricFieldCrossSec = real(elecFieldCrossSec_cpx);
 
 %% Segment 7
 P.figTitle = 'Segment 7';
