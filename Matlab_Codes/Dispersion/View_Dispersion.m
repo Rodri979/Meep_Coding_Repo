@@ -58,95 +58,230 @@ if (length(w_0_n) == length(gamma_n)) && (length(w_0_n) == length(sigma_n))
     n_0 = ((eps_mag + eps_re)./2).^(1/2);
     kappa = ((eps_mag - eps_re)./2).^(1/2);
     
-    title_1 = material + " n_0 by Wavelength";
+    width = 1.5;
+    lineColor = [0.15, 0.15, 0.15];
+    dataColor = [0.45 0.45 0.45];
+    sig_figs = 2;
+    data_spacing = 5;
+    dataSize = 5;
+
+    idx = 1:data_spacing:length(data_lambda);
+
+    title_1 = material + " Refractive Index by Wavelength";
     figure(1)
     hold on
-    plot(lambda_vec,n_0)
-    scatter(data_lambda, data_n_0)
-    title(title_1)
-    xlabel('Wavelength (um)')
-    ylabel('n_0')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(lambda_vec,n_0,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_lambda(idx), data_n_0(idx), 's', 'Color', dataColor)
+    plot(data_lambda(idx), data_n_0(idx), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_1, 'Interpreter','latex')
+    xlabel('Wavelength ($\mu$m)', 'Interpreter','latex')
+    ylabel('$n_0$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin1, ymax1] = scale_graph(data_n_0, n_0, sig_figs);
+    ylim([ymin1, ymax1])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
-    title_2 = material + " n_0 by Energy";
+    title_2 = material + " Refractive Index by Energy";
     figure(2)
     hold on
-    plot(Evs,n_0)
-    scatter(data_Evs, data_n_0)
-    title(title_2)
-    xlabel('E (eV)')
-    ylabel('n_0')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(Evs,n_0,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_Evs(idx), data_n_0(idx), 's', 'Color', dataColor)
+    plot(data_Evs(idx), data_n_0(idx), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_2, 'Interpreter','latex')
+    xlabel('Energy (eV)', 'Interpreter','latex')
+    ylabel('$n_0$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin2, ymax2] = scale_graph(data_n_0, n_0, sig_figs);
+    ylim([ymin2, ymax2])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
-    title_3 = material + " Real \epsilon by Wavelength";
+    title_3 = material + " Real $\epsilon$ by Wavelength";
     figure(3)
     hold on
-    plot(lambda_vec,eps_re)
-    scatter(data_lambda, data(:,2))
-    title(title_3)
-    xlabel('Wavelegnth (um)')
-    ylabel('real \epsilon')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(lambda_vec,eps_re,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_lambda(idx), data(idx,2), 's', 'Color',dataColor)
+    plot(data_lambda(idx), data(idx,2), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_3, 'Interpreter','latex')
+    xlabel('Wavelegnth ($\mu$m)', 'Interpreter','latex')
+    ylabel('Real $\epsilon$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin3, ymax3] = scale_graph(data(:,2), eps_re, sig_figs);
+    ylim([ymin3, ymax3])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
-    title_4 = material + " Imaginary \epsilon by Wavelength";
+    title_4 = material + " Imaginary $\epsilon$ by Wavelength";
     figure(4)
     hold on
-    plot(lambda_vec,eps_im)
-    scatter(data_lambda, data(:,3))
-    title(title_4)
-    xlabel('Wavelength (um)')
-    ylabel('im \epsilon')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(lambda_vec,eps_im,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_lambda(idx), data(idx,3), 's', 'Color', dataColor)
+    plot(data_lambda(idx), data(idx,3), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_4, 'Interpreter','latex')
+    xlabel('Wavelength ($\mu$m)', 'Interpreter','latex')
+    ylabel('Imaginary $\epsilon$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin4, ymax4] = scale_graph(data(:,3), eps_im, sig_figs);
+    ylim([ymin4, ymax4])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
     title_5 = material + " Extintion Coefficient by Wavelength";
     figure(5)
     hold on
-    plot(lambda_vec,kappa)
-    scatter(data_lambda, data_kappa)
-    title(title_5)
-    xlabel('Wavelength (um)')
-    ylabel('\kappa')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(lambda_vec,kappa,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_lambda(idx), data_kappa(idx), 's', 'Color', dataColor)
+    plot(data_lambda(idx), data_kappa(idx), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_5, 'Interpreter','latex')
+    xlabel('Wavelength ($\mu$m)', 'Interpreter','latex')
+    ylabel('$\kappa$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin5, ymax5] = scale_graph(data_kappa, kappa, sig_figs);
+    ylim([ymin5, ymax5])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
     title_6 = material + " Extinction Coefficient by Energy";
     figure(6)
     hold on
-    plot(Evs,kappa)
-    scatter(data_Evs, data_kappa)
-    title(title_6)
-    xlabel('E (eV)')
-    ylabel('\kappa')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(Evs,kappa,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_Evs(idx), data_kappa(idx), 's', 'Color', dataColor)
+    plot(data_Evs(idx), data_kappa(idx), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_6, 'Interpreter','latex')
+    xlabel('Energy (eV)', 'Interpreter','latex')
+    ylabel('$\kappa$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin6, ymax6] = scale_graph(data_kappa, kappa, sig_figs);
+    ylim([ymin6, ymax6])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
-    title_7 = material + " Real \epsilon by \omega";
+    title_7 = material + " Real $\epsilon$ by $\omega$";
     figure(7)
     hold on
-    plot(freqs,eps_re)
-    scatter(data_freqs, data(:,2))
-    title(title_7)
-    xlabel('\omega (meep units)')
-    ylabel('real \epsilon')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(freqs,eps_re,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_freqs(idx), data(idx,2), 's', 'Color', dataColor)
+    plot(data_freqs(idx), data(idx,2), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_7, 'Interpreter','latex')
+    xlabel('$\omega$ (meep units)', 'Interpreter','latex')
+    ylabel('Real $\epsilon$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin7, ymax7] = scale_graph(data(:,2), eps_re, sig_figs);
+    ylim([ymin7, ymax7])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
 
-    title_8 = material + " Imaginary \epsilon by \omega";
+    title_8 = material + " Imaginary $\epsilon$ by $\omega$";
     figure(8)
     hold on
-    plot(freqs,eps_im)
-    scatter(data_freqs, data(:,3))
-    title(title_8)
-    xlabel('\omega (meep units)')
-    ylabel('im \epsilon')
-    legend('Model','Experiment', 'Location', 'best')
+    plot(freqs,eps_im,'Color',lineColor, 'LineWidth',width)
+    %scatter(data_freqs, data(:,3), 's', 'Color', dataColor)
+    plot(data_freqs(idx), data(idx,3), ...
+        's', ...
+        'LineStyle', 'none', ...
+        'MarkerSize', dataSize, ...
+        'MarkerEdgeColor', dataColor, ...
+        'MarkerFaceColor', 'none')
+    title(title_8, 'Interpreter','latex')
+    xlabel('$\omega$ (meep units)', 'Interpreter','latex')
+    ylabel('Imaginary $\epsilon$', 'Interpreter','latex')
+    legend('Model','Experiment', 'Location', 'best', 'Interpreter','latex')
+    legend('boxoff')
+    set(gca,'TickLabelInterpreter','latex')
+    [ymin8, ymax8] = scale_graph(data(:,3), eps_im, sig_figs);
+    ylim([ymin8, ymax8])
+    ax = gca;
+    ax.LineWidth = 1.2;
+    grid on
     hold off
+
+
 else
     warning("Error: Make sure that the length of w_0_n = gamma_n = sigma_n \n \n")
 end
 
+end
+
+
+function [ymin, ymax] = scale_graph(data, model, sig_figs)
+    ymax = max([max(data), max(model)]);
+    exponent = floor(log10(abs(ymax)));
+    ymax = ymax/10^exponent;
+    ymax = ymax*10^(sig_figs - 1);
+    ymax = ceil(ymax);
+    ymax = ymax/10^(sig_figs - 1);
+    ymax = ymax*10^exponent;
+
+    
+    ymin = min([min(data), min(model)]);
+    exponent = floor(log10(abs(ymin)));
+    ymin = ymin/10^exponent;
+    ymin = ymin*10^(sig_figs - 1);
+    ymin = floor(ymin);
+    ymin = ymin/10^(sig_figs - 1);
+    ymin = ymin*10^exponent;
 end
